@@ -15,15 +15,13 @@ struct GPUView: View {
         screen.width / 530
     }
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \GPUen.name, ascending: true)],
-        animation: .default)  private var cdGPU: FetchedResults<GPUen>
-    
     @State var circleScale: CGFloat = 1
     @State var circleOpacity: Double = 1
     
     @EnvironmentObject var gpu: GPU
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: GPUen.entity(),
+                  sortDescriptors: [])  private var cdGPU: FetchedResults<GPUen>
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {

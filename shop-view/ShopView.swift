@@ -10,6 +10,7 @@ import SwiftUI
 struct ShopView: View {
     
     @EnvironmentObject var gpu: GPU
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State var secondsWaited = 0
     @State var GPUS = [GPU]()

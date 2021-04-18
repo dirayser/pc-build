@@ -10,12 +10,10 @@ import SwiftUI
 struct MyPCView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CPUen.name, ascending: true)],
-        animation: .default)  private var cdCPU: FetchedResults<CPUen>
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \GPUen.name, ascending: true)],
-        animation: .default)  private var cdGPU: FetchedResults<GPUen>
+    @FetchRequest(entity: CPUen.entity(),
+                  sortDescriptors: [])  private var cdCPU: FetchedResults<CPUen>
+    @FetchRequest(entity: GPUen.entity(),
+                  sortDescriptors: [])  private var cdGPU: FetchedResults<GPUen>
     
     @EnvironmentObject var cpu: CPU // = CPU(name: "No CPU", manufacturer: "")
     @EnvironmentObject var gpu: GPU

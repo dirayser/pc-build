@@ -9,9 +9,8 @@ import SwiftUI
 
 struct CPUSheet: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CPUen.name, ascending: true)],
-        animation: .default)  private var cdCPU: FetchedResults<CPUen>
+    @FetchRequest(entity: CPUen.entity(),
+        sortDescriptors: [])  private var cdCPU: FetchedResults<CPUen>
     
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var cpu: CPU
