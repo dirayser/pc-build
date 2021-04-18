@@ -75,7 +75,22 @@ struct MyPCView: View {
                         .padding(.vertical, 30)
                         .frame(height: 150)
                     }
-                    .sheet(isPresented: $showingSheet) {
+                    .sheet(isPresented: $showingSheet, onDismiss: {
+                        if cdCPU.count == 1 {
+                            cdCPU[0].setValue(cpu.name, forKey: "name")
+                            cdCPU[0].setValue(cpu.manufacturer, forKey: "manufacturer")
+                        } else {
+                            let newCPU = CPUen(context: viewContext)
+                            newCPU.name = cpu.name
+                            newCPU.manufacturer = cpu.manufacturer
+                        }
+                        do {
+                            try viewContext.save()
+                        } catch {
+                            let nsError = error as NSError
+                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                        }
+                    }) {
                         CPUSheet(cpu: self.cpu)
                     }
                     

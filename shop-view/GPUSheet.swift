@@ -19,9 +19,6 @@ struct GPUView: View {
     @State var circleOpacity: Double = 1
     
     @EnvironmentObject var gpu: GPU
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: GPUen.entity(),
-                  sortDescriptors: [])  private var cdGPU: FetchedResults<GPUen>
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -100,22 +97,6 @@ struct GPUView: View {
                     }
                     
                     Button(action: {
-                        if cdGPU.count == 1 {
-                            cdGPU[0].setValue(GPUItem.name, forKey: "name")
-                            cdGPU[0].setValue(GPUItem.price, forKey: "price")
-                            cdGPU[0].setValue(GPUItem.benchmark, forKey: "benchmark")
-                        } else {
-                            let newGPU = GPUen(context: viewContext)
-                            newGPU.name = GPUItem.name
-                            newGPU.price = GPUItem.price
-                            newGPU.benchmark = Int64(GPUItem.benchmark)
-                        }
-                        do {
-                            try viewContext.save()
-                        } catch {
-                            let nsError = error as NSError
-                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                        }
                         self.gpu.benchmark = GPUItem.benchmark
                         self.gpu.name = GPUItem.name
                         self.gpu.price = GPUItem.price

@@ -11,6 +11,8 @@ struct ShopView: View {
     
     @EnvironmentObject var gpu: GPU
     @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: GPUen.entity(),
+                  sortDescriptors: [])  private var cdGPU: FetchedResults<GPUen>
     
     @State var secondsWaited = 0
     @State var GPUS = [GPU]()
@@ -47,7 +49,24 @@ struct ShopView: View {
                                         .padding(.vertical, 30)
                                         .frame(height: 150)
                                     }
-                                    .sheet(isPresented: $showingSheet) {
+                                    .sheet(isPresented: $showingSheet, onDismiss: {
+                                        if cdGPU.count == 1 {
+                                            cdGPU[0].setValue(gpu.name, forKey: "name")
+                                            cdGPU[0].setValue(gpu.price, forKey: "price")
+                                            cdGPU[0].setValue(gpu.benchmark, forKey: "benchmark")
+                                        } else {
+                                            let newGPU = GPUen(context: viewContext)
+                                            newGPU.name = gpu.name
+                                            newGPU.price = gpu.price
+                                            newGPU.benchmark = Int64(gpu.benchmark)
+                                        }
+                                        do {
+                                            try viewContext.save()
+                                        } catch {
+                                            let nsError = error as NSError
+                                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                                        }
+                                    }) {
                                         GPUView(GPUItem: gpu)
                                     }
                                 }
