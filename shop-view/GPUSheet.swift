@@ -134,5 +134,6 @@ struct GPUView: View {
 struct GPUView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

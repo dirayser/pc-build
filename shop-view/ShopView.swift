@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ShopView: View {
     
-    @EnvironmentObject var gpu: GPU
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: GPUen.entity(),
                   sortDescriptors: [])  private var cdGPU: FetchedResults<GPUen>
+    
+    @EnvironmentObject var gpu: GPU
     
     @State var secondsWaited = 0
     @State var GPUS = [GPU]()
@@ -25,7 +26,7 @@ struct ShopView: View {
             NavigationView {
                 if GPUS.count > 0 {
                     Form {
-                            ForEach(GPUS) { gpu in
+                            ForEach(GPUS) { currGPU in
                                 Section {
                                     Button(action: {
                                         self.showingSheet.toggle()
@@ -37,11 +38,11 @@ struct ShopView: View {
                                                 .frame(width: 80)
                                             Spacer()
                                             VStack {
-                                                Text("\(gpu.name)")
+                                                Text("\(currGPU.name)")
                                                     .font(.title2)
                                                     .fontWeight(.bold)
                                                 Spacer()
-                                                Text("\(gpu.price, specifier: "%.f $")")
+                                                Text("\(currGPU.price, specifier: "%.f $")")
                                                     .fontWeight(.bold)
                                             }
                                         }
@@ -53,7 +54,7 @@ struct ShopView: View {
                                         if cdGPU.count == 1 {
                                             cdGPU[0].setValue(gpu.name, forKey: "name")
                                             cdGPU[0].setValue(gpu.price, forKey: "price")
-                                            cdGPU[0].setValue(gpu.benchmark, forKey: "benchmark")
+                                            cdGPU[0].setValue(Int64(gpu.benchmark), forKey: "benchmark")
                                         } else {
                                             let newGPU = GPUen(context: viewContext)
                                             newGPU.name = gpu.name
@@ -67,7 +68,7 @@ struct ShopView: View {
                                             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                                         }
                                     }) {
-                                        GPUView(GPUItem: gpu)
+                                        GPUView(GPUItem: currGPU)
                                     }
                                 }
                                     
@@ -133,5 +134,6 @@ struct ShopView: View {
 struct ShopView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
