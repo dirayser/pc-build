@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct CPUSheet: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \CPUen.name, ascending: true)],
+        animation: .default)  private var cdCPU: FetchedResults<CPUen>
+    
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var cpu: CPU
     
@@ -25,8 +30,22 @@ struct CPUSheet: View {
                 ForEach(CPUs) { currCPU in
                     Section {
                         Button(action: {
+                            if cdCPU.count == 1 {
+                                cdCPU[0].setValue(currCPU.name, forKey: "name")
+                                cdCPU[0].setValue(currCPU.manufacturer, forKey: "manufacturer")
+                            } else {
+                                let newCPU = CPUen(context: viewContext)
+                                newCPU.name = currCPU.name
+                                newCPU.manufacturer = currCPU.manufacturer
+                            }
                             self.cpu.name = currCPU.name
                             self.cpu.manufacturer = currCPU.manufacturer
+                            do {
+                                try viewContext.save()
+                            } catch {
+                                let nsError = error as NSError
+                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                            }
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             HStack {

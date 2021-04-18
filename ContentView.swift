@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @State var currentScreen = 2
     @StateObject var gpu = GPU(name: "Integrated", price: 0, benchmark: 850)
-    @StateObject var cpu = CPU(name: "Choose CPU", manufacturer: "")
+    @StateObject var cpu = CPU(name: "Select CPU", manufacturer: "")
     
     var screen =  UIScreen.main.bounds
     
@@ -99,5 +103,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
