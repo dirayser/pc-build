@@ -18,7 +18,6 @@ struct ShopView: View {
     @State var secondsWaited = 0
     @State var GPUS = [GPU]()
     @State private var showingSheet = false
-    @State var loadingRotation = 0.0
     
     var screen =  UIScreen.main.bounds
     
@@ -78,20 +77,7 @@ struct ShopView: View {
                 }
                 else {
                     if secondsWaited < 20 {
-                                Circle()
-                                    .stroke(Color.white, style: StrokeStyle(lineWidth: 3, dash: [10, 15]))
-                                    .frame(width: 150, height: 150)
-                                    .navigationBarTitle("Shop")
-                                    .rotationEffect(.degrees(loadingRotation))
-                                    .overlay(Text("Loading"))
-                                    .position(x: screen.width / 2, y: screen.height / 3)
-                                    .onAppear {
-                                        if GPUS.count == 0 {
-                                            withAnimation(Animation.linear(duration: 5).repeatForever(autoreverses: false)) {
-                                                loadingRotation += 360
-                                            }
-                                        }
-                                    }
+                        Loader(GPUS: $GPUS)
                     }
                     else {
                         VStack(spacing: 20) {
