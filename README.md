@@ -1,5 +1,12 @@
 # pc-build iOS App 
-### На стадии разработки
+### На стадии разработки (screenshots may be out of date)
+### Стек:
+- Swift 5
+- SwiftUI
+- CoreData
+- RESTful API
+- MVVM
+    
 
 ## Пользовательский ПК
 <img src="https://github.com/dirayser/images/blob/main//pc-build//mypc.jpg?raw=true" width="200">
