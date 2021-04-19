@@ -87,7 +87,11 @@ struct ShopView: View {
                                 self.secondsWaited = 0
                                 Timer.scheduledTimer(withTimeInterval: 12, repeats: true) { timer in
                                     secondsWaited += 10
-                                    getGPUs().forEach {
+                                    var fetched = getGPUs()
+                                    fetched.sort{
+                                        $1.price < $0.price
+                                    }
+                                    fetched.forEach {
                                         GPUS.append(GPU(name: $0.name, price: $0.price, benchmark: $0.benchmark))
                                     }
                                     if secondsWaited == 20 || GPUS.count > 0 {
@@ -108,7 +112,11 @@ struct ShopView: View {
             .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
-                    getGPUs().forEach {
+                    var fetched = getGPUs()
+                    fetched.sort{
+                        $1.price < $0.price
+                    }
+                    fetched.forEach {
                         GPUS.append(GPU(name: $0.name, price: $0.price, benchmark: $0.benchmark))
                     }
                     self.secondsWaited = 20
