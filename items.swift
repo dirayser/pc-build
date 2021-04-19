@@ -7,27 +7,31 @@
 
 import Foundation
 
-class GPU: ObservableObject, Identifiable {
+class Hardware: ObservableObject, Identifiable {
     var id = UUID()
     @Published var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+class GPU: Hardware {
     @Published var price: Double
     @Published var benchmark: UInt
     
     init(name: String, price: Double, benchmark: UInt) {
-        self.name = name
         self.price = price
         self.benchmark = benchmark
+        super.init(name: name)
     }
 }
 
-class CPU: ObservableObject, Identifiable {
-    var id = UUID()
-    @Published var name: String
+class CPU: Hardware {
     @Published var manufacturer: String
     
     init(name: String, manufacturer: String) {
-        self.name = name
         self.manufacturer = manufacturer
+        super.init(name: name)
     }
 }
 
