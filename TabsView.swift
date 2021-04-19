@@ -41,8 +41,6 @@ struct TabsView: View {
                 .foregroundColor(screenIndex == 1 ? .black : .gray)
             }
             
-            Divider()
-            
             Button(action: {
                 self.screenIndex = 2
             }) {
