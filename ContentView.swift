@@ -13,8 +13,8 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var currentScreen = 2
-    @StateObject var gpu = GPU(name: "Integrated", price: 0, benchmark: 850)
-    @StateObject var cpu = CPU(name: "Select CPU", manufacturer: "")
+    @ObservedObject var gpu = GPU(name: "Integrated", price: 0, benchmark: 850)
+    @ObservedObject var cpu = CPU(name: "Select CPU", manufacturer: "")
     
     var screen =  UIScreen.main.bounds
     
