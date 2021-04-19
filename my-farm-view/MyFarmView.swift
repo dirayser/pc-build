@@ -14,6 +14,7 @@ struct MyFarmView: View {
             }
             .navigationTitle("My Farm (coming soon)")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -30,10 +30,7 @@ struct ContentView: View {
                     } else if currentScreen == 2 {
                         MyPCView()
                     }
-                    
-                    Spacer()
                 }
-                
                 
                 HStack(spacing: 40) {
                     Button(action: {
@@ -44,8 +41,9 @@ struct ContentView: View {
                                 .resizable()
                                 .frame(width: 30, height: 30)
                             Text("Shop")
-                                .foregroundColor(currentScreen == 0 ? .black : .gray)
-                                .fontWeight(.bold)                        }
+                                .fontWeight(.bold)
+                        }
+                        .foregroundColor(currentScreen == 0 ? .black : .gray)
                         
                     }
                     

@@ -99,6 +99,7 @@ struct MyPCView: View {
             .padding(.top, 30)
             .navigationTitle("My PC")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
             if cdCPU.count == 1 {
                 self.cpu.name = cdCPU[0].name!

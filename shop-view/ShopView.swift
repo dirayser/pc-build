@@ -119,6 +119,7 @@ struct ShopView: View {
                     }
                 
                 }
+            .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
                     getGPUs().forEach {
