@@ -26,7 +26,7 @@ struct MyPCView: View {
             Form {
                 Section(header: Text("GPU").font(.title)) {
                     HStack {
-                        Image(systemName: "gamecontroller")
+                        Image(systemName: "ant.circle")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 80)

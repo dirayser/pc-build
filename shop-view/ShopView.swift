@@ -32,7 +32,7 @@ struct ShopView: View {
                                         self.showingSheet.toggle()
                                     }) {
                                         HStack {
-                                            Image(systemName: "gamecontroller")
+                                            Image(systemName: "ant.circle")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 80)
