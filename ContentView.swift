@@ -31,62 +31,9 @@ struct ContentView: View {
                         MyPCView()
                     }
                 }
-                
-                HStack(spacing: 40) {
-                    Button(action: {
-                        self.currentScreen = 0
-                    }) {
-                        VStack {
-                            Image(systemName: "cart")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("Shop")
-                                .fontWeight(.bold)
-                        }
-                        .foregroundColor(currentScreen == 0 ? .black : .gray)
-                        
-                    }
-                    
-                    Divider()
-                    
-                    Button(action: {
-                        self.currentScreen = 1
-                    }) {
-                        VStack {
-                            Image(systemName: "xserve")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("My farm")
-                                .fontWeight(.bold)
-                        }
-                        .foregroundColor(currentScreen == 1 ? .black : .gray)
-                    }
-                    
-                    Divider()
-                    
-                    Button(action: {
-                        self.currentScreen = 2
-                    }) {
-                        VStack {
-                            Image(systemName: "desktopcomputer")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("My PC")
-                                .fontWeight(.bold)
-                        }
-                        .foregroundColor(currentScreen == 2 ? .black : .gray)
-                    }
-                    
-                    
-                }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 10)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
-                .fixedSize()
-                .frame(maxWidth: geo.size.width)
-                .foregroundColor(.black)
-                .background(Color.white)
-                
+                TabsView(screenIndex: $currentScreen)
+                    .padding(.bottom, geo.safeAreaInsets.bottom)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .background(Color.black)
         }
