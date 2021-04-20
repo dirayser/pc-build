@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var currentScreen = 2
+    @StateObject var delegate = NotificationDelegate()
     @ObservedObject var gpu = GPU(name: "Integrated", price: 0, benchmark: 850)
     @ObservedObject var cpu = CPU(name: "Select CPU", manufacturer: "")
     
@@ -41,7 +42,20 @@ struct ContentView: View {
         .environmentObject(cpu)
         .edgesIgnoringSafeArea(.bottom)
         .preferredColorScheme(.dark)
+        .onAppear {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                (_, _) in
+            }
+            
+            UNUserNotificationCenter.current().delegate = delegate
+        }
         
+    }
+}
+
+class NotificationDelegate: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .banner, .sound])
     }
 }
 

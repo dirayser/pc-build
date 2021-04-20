@@ -40,8 +40,9 @@ struct GPUView: View {
                         .fontWeight(.bold)
                     Spacer()
                 }
-                .padding(20)
+                .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .padding(.top, geo.safeAreaInsets.bottom)
+                .padding(20)
                 .background(Color("gpuview-bgcolor"))
                 
                 VStack(spacing: 75 * koef) {
@@ -100,6 +101,7 @@ struct GPUView: View {
                         self.gpu.benchmark = GPUItem.benchmark
                         self.gpu.name = GPUItem.name
                         self.gpu.price = GPUItem.price
+                        createNotification()
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         RoundedRectangle(cornerRadius: 25)
@@ -119,6 +121,7 @@ struct GPUView: View {
                     }
                 }
                 .padding(.top, 10)
+                
                 Spacer()
             }
             .frame(
@@ -127,7 +130,17 @@ struct GPUView: View {
             )
             .background(Color("bgcolor").edgesIgnoringSafeArea(.bottom))
         }
+    }
+    
+    func createNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "GPU updated"
+        content.subtitle = "\(gpu.name) selected"
         
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: "IN-APP", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 

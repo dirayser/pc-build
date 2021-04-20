@@ -51,7 +51,7 @@ struct MyPCView: View {
                     .frame(height: 150)
                 }
                 
-                Section(header: Text("CPU").font(.title)) {
+                Section(header: Text("Select CPU").font(.title)) {
                     Button(action: {
                         self.showingSheet.toggle()
                     }) {
